@@ -15,10 +15,6 @@ public class SignupRequest {
     private String lastname;
 
     @NotBlank
-    @Size(max = 1)
-    private String mi;
-
-    @NotBlank
     @Size(min = 3, max = 20)
     private String username;
  
@@ -47,14 +43,6 @@ public class SignupRequest {
 
     public void setLastname(String lastname) {
         this.lastname = lastname;
-    }
-
-    public String getMi() {
-        return this.mi;
-    }
-
-    public void setMi(String mi) {
-        this.mi = mi;
     }
   
     public String getUsername() {

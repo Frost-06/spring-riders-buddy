@@ -25,10 +25,6 @@ public class User {
   private String lastname;
 
   @NotBlank
-  @Size(max = 1)
-  private String mi;
-
-  @NotBlank
   @Size(max = 50)
   @Email
   private String email;
@@ -47,10 +43,9 @@ public class User {
   public User() {
   }
 
-  public User(String firstname, String lastname, String mi,String username, String email, String password) {
+  public User(String firstname, String lastname, String username, String email, String password) {
     this.firstname = firstname;
     this.lastname = lastname;
-    this.mi = mi;
     this.username = username;
     this.email = email;
     this.password = password;
@@ -80,13 +75,6 @@ public class User {
         this.lastname = lastname;
     }
 
-    public String getMi() {
-        return this.mi;
-    }
-
-    public void setMi(String mi) {
-        this.mi = mi;
-    }
 
     public String getUsername() {
         return username;
