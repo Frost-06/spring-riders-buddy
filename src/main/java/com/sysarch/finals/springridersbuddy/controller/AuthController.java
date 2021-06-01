@@ -68,6 +68,9 @@ public class AuthController {
 
 		return ResponseEntity.ok(new JwtResponse(jwt, 
 												 userDetails.getId(), 
+												 userDetails.getFirstname(),
+												 userDetails.getLastname(),
+												 userDetails.getMi(),
 												 userDetails.getUsername(), 
 												 userDetails.getEmail(), 
 												 roles));
@@ -109,12 +112,6 @@ public class AuthController {
 					Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
 							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
 					roles.add(adminRole);
-
-					break;
-				case "mod":
-					Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
-							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-					roles.add(modRole);
 
 					break;
 				default:
