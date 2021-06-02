@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -75,6 +77,55 @@ public class AuthController {
 
 	@PostMapping("/signup")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
+
+		String firstname = signUpRequest.getFirstname();
+		String lastname = signUpRequest.getLastname();
+
+		//check if number exist in a string
+		char[] chars_firstname = firstname.toCharArray();
+		char[] chars_lastname = lastname.toCharArray();
+
+		for(char c : chars_firstname){
+			if(Character.isDigit(c)){
+				return ResponseEntity.badRequest().body(new MessageResponse("Invalid first name value numbers are not allowed"));
+			}
+		}
+
+		for(char c : chars_lastname){
+			if(Character.isDigit(c)){
+				return ResponseEntity.badRequest().body(new MessageResponse("Invalid last name value numbers are not allowed"));
+			}
+		}
+
+		//check if input is a number
+		if (Pattern.matches("[0-9]+", firstname) == true) {
+			return ResponseEntity.badRequest().body(new MessageResponse("First name value won't allow numbers!"));
+		}
+
+		if (Pattern.matches("[0-9]+", lastname) == true) {
+			return ResponseEntity.badRequest().body(new MessageResponse("Last name value won't allow numbers!"));
+		}
+		
+		//check if special characters exist
+		Pattern pattern_firstname = Pattern.compile("[^a-zA-Z0-9]");
+		Matcher matcher_firstname = pattern_firstname.matcher(firstname);
+
+		boolean isContainSpecialCharactersForFirstname = matcher_firstname.find();
+
+		if(isContainSpecialCharactersForFirstname) {
+			return ResponseEntity.badRequest().body(new MessageResponse("First name value won't allow special characters!"));
+		}
+
+		Pattern pattern_lastname = Pattern.compile("[^a-zA-Z0-9]");
+		Matcher matcher_lastname = pattern_lastname.matcher(lastname);
+
+		boolean isContainSpecialCharactersForLastName = matcher_lastname.find();
+
+		if(isContainSpecialCharactersForLastName) {
+			return ResponseEntity.badRequest().body(new MessageResponse("Last name value won't allow special characters!"));
+		}
+
+		//check if username and email exist
 		if (userRepository.existsByUsername(signUpRequest.getUsername())) {
 			return ResponseEntity.badRequest().body(new MessageResponse("Username is already taken!"));
 		}
