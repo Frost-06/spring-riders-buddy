@@ -21,8 +21,6 @@ public class UserDetailsImpl implements UserDetails {
   
   	private String lastname;
 
-  	private String mi;
-
 	private String username;
 
 	private String email;
@@ -74,11 +72,6 @@ public class UserDetailsImpl implements UserDetails {
 
     public String getLastname() {
         return lastname;
-    }
-
-
-    public String getMi() {
-        return mi;
     }
 
 	public String getEmail() {
